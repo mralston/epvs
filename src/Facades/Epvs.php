@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see \Mralston\Epvs\Traits\Validations
  * @method static \Illuminate\Support\Collection getValidations()
+ * @method static \Mralston\Epvs\Models\Validation showValidation(int $id)
+ * @method static \Mralston\Epvs\Models\Validation createValidation(array $attrs)
  */
 class Epvs extends Facade
 {
