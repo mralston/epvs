@@ -1,0 +1,41 @@
+{
+    "name": "mralston/epvs",
+    "description": "Library for working with Certi-fi EPVS API.",
+    "keywords": [
+        "mralston",
+        "laravel",
+        "epvs"
+    ],
+    "homepage": "https://github.com/mralston/epvs",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matt Ralston",
+            "email": "matt@mralston.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "illuminate/http": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/database": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mralston\\Epvs\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mralston\\Epvs\\Providers\\EpvsServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
