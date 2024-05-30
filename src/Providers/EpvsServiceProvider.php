@@ -4,6 +4,7 @@ namespace Mralston\Epvs\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Mralston\Epvs\ApiClient;
+use Mralston\Epvs\Console\Commands\GetWebhookUrlCommand;
 
 class EpvsServiceProvider extends ServiceProvider
 {
@@ -31,10 +32,16 @@ class EpvsServiceProvider extends ServiceProvider
             );
         });
 
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../../config/config.php' => config_path('epvs.php'),
             ], 'epvs-config');
+
+            $this->commands([
+                GetWebhookUrlCommand::class,
+            ]);
         }
     }
 }

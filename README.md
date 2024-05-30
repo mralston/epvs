@@ -64,6 +64,42 @@ $newValidation = Epvs::createValidation([ // Mralston\Epvs\Models\Validation
 ]);
 ```
 
+## Webhooks
+
+A webhook URL can be configured on your EPVS Validation Hub portal, allowing you to receive real-time updates when the status of a validation occurs.
+
+The URL for the webhook is returned by the following Artisan command:
+
+```bash
+$ php artisan epvs:webhook-url
+https://your-web.app/epvs/webhook
+```
+
+Add a new webhook on your profile page on the EPVS Validation Hub and copy and paste the URL provided.
+
+Whenever the status of a validation changes or another webhook-backed event occurs, a `WebhookRecieved` event will be fired in your application. The `data` property contains information about the event. In the case of a VALIDATION_STATUS_UPDATED event, the data property will contain an array similar to the following:
+
+```
+(
+    [validation_id] => 2
+    [status_id] => 1
+    [status_name] => Validated
+)
+```
+
+The following statuses are currently defined by the EPVS Validation Hub:
+
+| Status ID | Status Name              |
+|-----------|--------------------------|
+| 1         | Validated                |
+| 2         | Awaiting Compliance Call |
+| 3         | Cancelled Worked         |
+| 4         | Cancelled Not Worked     |
+| 5         | Declined                 |
+| 6         | Further Info Requested   |
+| 7         | Pending                  |
+| 8         | Registered               |
+
 ## Security Vulnerabilities
 
 Please [e-mail security vulnerabilities directly to me](mailto:matt@mralston.co.uk).
