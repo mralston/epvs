@@ -66,13 +66,12 @@ $newValidation = Epvs::createValidation([ // Mralston\Epvs\Models\Validation
 
 ## Webhooks
 
-A webhook URL can be configured on your EPVS Validation Hub portal, allowing you to receive real-time updates when the status of a validation occurs.
+Webhook can be configured on your EPVS Validation Hub portal, allowing you to receive real-time updates, for example when the status of a validation changes.
 
-The URL for the webhook is returned by the following Artisan command:
+The following Artisan command generates the URL of each webhook, ready to be pasted into the EPVS Validation Hub:
 
 ```bash
-$ php artisan epvs:webhook-url
-https://your-web.app/epvs/webhook
+$ php artisan epvs:webhooks
 ```
 
 Add a new webhook on your profile page on the EPVS Validation Hub and copy and paste the URL provided.

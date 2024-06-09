@@ -6,25 +6,44 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HydratesRelations
 {
-    public function hydrate(): Model
+    public function fillAndHydrate(array $attributes, bool $persist = true): Model
+    {
+        $this->setRawAttributes(['id' => $attributes['id'] ?? null])
+            ->fill($attributes)
+            ->hydrateRelations($attributes, $persist);
+
+        if ($persist) {
+            $this->save();
+        }
+
+        return $this;
+    }
+
+    public function hydrateRelations(array $attributes, bool $persist = true): Model
     {
         if (!isset($this->hydrate) || !is_array($this->hydrate)) {
             return $this;
         }
 
-        foreach ($this->getAttributes() as $key => $value) {
+        foreach ($attributes as $field => $relationAttributes) {
             if (
-                is_array($value) &&
-                isset($this->hydrate[$key]) &&
-                class_exists($this->hydrate[$key])
+                is_array($relationAttributes) &&
+                isset($this->hydrate[$field]) &&
+                class_exists($class = $this->hydrate[$field])
             ) {
-                $child = app($this->hydrate[$key])->forceFill($value);
+                $child = ($class::find($relationAttributes['id'] ?? null) ?? app($class))
+                    ->fill($relationAttributes);
 
-                if (method_exists($child, 'hydrate')) {
-                    $child->hydrate();
+                if ($persist) {
+                    $child->save();
+                    $child->attributes[$field . '_id'] = $child->id;
+                } else {
+                    $this->attributes[$field] = $child;
                 }
 
-                $this->setAttribute($key, $child);
+                if (method_exists($child, 'hydrate')) {
+                    $child->hydrate($relationAttributes, $persist);
+                }
             }
         }
 

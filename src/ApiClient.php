@@ -4,10 +4,20 @@ namespace Mralston\Epvs;
 
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Str;
+use Mralston\Epvs\Traits\FinanceBrokers;
+use Mralston\Epvs\Traits\FinanceLenders;
+use Mralston\Epvs\Traits\InsuranceProviders;
+use Mralston\Epvs\Traits\PaymentMethods;
+use Mralston\Epvs\Traits\ProductTypes;
 use Mralston\Epvs\Traits\Validations;
 
 class ApiClient
 {
+    use FinanceBrokers;
+    use FinanceLenders;
+    use InsuranceProviders;
+    use PaymentMethods;
+    use ProductTypes;
     use Validations;
 
     private string $endpoint = 'https://validationhub.co.uk/api/v1';

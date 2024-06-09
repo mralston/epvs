@@ -1,6 +1,6 @@
 {
     "name": "mralston/epvs",
-    "description": "Library for working with Certi-fi EPVS API.",
+    "description": "Library for working with the Certi-fi EPVS Validation Hub API.",
     "keywords": [
         "mralston",
         "laravel",
@@ -32,7 +32,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Mralston\\Epvs\\Providers\\EpvsServiceProvider"
+                "Mralston\\Epvs\\EpvsServiceProvider"
             ]
         }
     },

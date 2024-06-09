@@ -9,7 +9,7 @@ use Mralston\Epvs\Models\Validation;
 
 trait Validations
 {
-    public function getValidations(): Collection
+    public function getValidations(bool $persist = true): Collection
     {
         $this->response = Http::withToken($this->token)
             ->get($this->endpoint . '/validations')
@@ -23,13 +23,16 @@ trait Validations
 
         return collect($json['data'])
             ->map(
-                fn ($validation) => app(Validation::class)
-                    ->forceFill($validation)
-                    ->hydrate()
+                function ($attributes) use ($persist) {
+                    return (
+                        Validation::find($attributes['id'] ?? null) ??
+                        app(Validation::class)
+                    )->fillAndHydrate($attributes, $persist);
+                }
             );
     }
 
-    public function showValidation(int $id): Validation
+    public function showValidation(int $id, bool $persist = true): Validation
     {
         $this->response = Http::withToken($this->token)
             ->get($this->endpoint . '/validations/' . $id)
@@ -41,15 +44,18 @@ trait Validations
             throw new InvalidResponseException();
         }
 
-        return app(Validation::class)
-            ->forceFill($json['data'])
-            ->hydrate();
+        return (
+            Validation::find($json['data']['id'] ?? null) ??
+            app(Validation::class)
+        )->fillAndHydrate($json['data'], $persist);
     }
 
-    public function createValidation(array $attrs): Validation
+    public function createValidation(array $attributes, bool $persist = true): Validation
     {
+        $this->requestPayload = $attributes;
+
         $this->response = Http::withToken($this->token)
-            ->post($this->endpoint . '/validations', $attrs)
+            ->post($this->endpoint . '/validations', $this->requestPayload)
             ->throw();
 
         $json = $this->response->json();
@@ -59,7 +65,6 @@ trait Validations
         }
 
         return app(Validation::class)
-            ->forceFill($json['data'])
-            ->hydrate();
+            ->fillAndHydrate($json['data'], $persist);
     }
 }

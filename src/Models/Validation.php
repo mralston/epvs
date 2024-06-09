@@ -9,6 +9,8 @@ class Validation extends Model
 {
     use HydratesRelations;
 
+    protected $table = 'epvs_validations';
+
     protected $fillable = [
         'created_by_user_id',
         'assigned_to_user_id',
@@ -55,14 +57,13 @@ class Validation extends Model
         'customer_full_name',
         'installation_address_full',
         'payment_method_readable',
-        'assigned_to_user',
-        'created_by_user',
-        'installer',
-        'product_type',
-        'finance_lender',
-        'finance_broker',
-        'insurance_provider',
-        'validation_status',
+    ];
+
+    protected $casts = [
+        'date_contract_signed' => 'datetime',
+        'billed_date' => 'datetime',
+        'cancellation_requested_at' => 'datetime',
+        'last_activity_at' => 'datetime',
     ];
 
     protected $hydrate = [
@@ -75,4 +76,44 @@ class Validation extends Model
         'insurance_provider' => InsuranceProvider::class,
         'validation_status' => ValidationStatus::class,
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
+    }
+
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to_user_id');
+    }
+
+    public function installer()
+    {
+        return $this->belongsTo(Installer::class);
+    }
+
+    public function productType()
+    {
+        return $this->belongsTo(ProductType::class);
+    }
+
+    public function financeLender()
+    {
+        return $this->belongsTo(FinanceLender::class);
+    }
+
+    public function financeBroker()
+    {
+        return $this->belongsTo(FinanceBroker::class);
+    }
+
+    public function insuranceProvider()
+    {
+        return $this->belongsTo(InsuranceProvider::class);
+    }
+
+    public function validationStatus()
+    {
+        return $this->belongsTo(ValidationStatus::class);
+    }
 }

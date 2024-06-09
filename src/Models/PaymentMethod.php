@@ -5,14 +5,13 @@ namespace Mralston\Epvs\Models;
 use Illuminate\Database\Eloquent\Model;
 use Mralston\Epvs\Traits\HydratesRelations;
 
-class InsuranceProvider extends Model
+class PaymentMethod extends Model
 {
     use HydratesRelations;
 
-    protected $table = 'epvs_insurance_providers';
+    protected $table = 'epvs_payment_methods';
 
     protected $fillable = [
         'name',
-        'xero_contact_link',
     ];
 }
