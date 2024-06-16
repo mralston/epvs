@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('epvs_validations', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->primary();
             $table->integer('created_by_user_id')->nullable()->index();
             $table->integer('assigned_to_user_id')->nullable()->index();
             $table->integer('installer_id')->nullable()->index();

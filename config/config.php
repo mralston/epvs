@@ -26,12 +26,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Status Poller
+    | Dashboard
     |--------------------------------------------------------------------------
     |
-    | When enabled, the status of active finance applications will be polled regularly.
+    | Base URL for the EPVS Dashboard.
     |
     */
 
-    'status_poller_enabled' => env('EPVS_POLL_STATUSES', true),
+    'dashboard' => env('EPVS_DASHBOARD', 'https://validationhub.co.uk'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Webhook Protection
+    |--------------------------------------------------------------------------
+    |
+    | Choose which middleware is applied to the webhook endpoint
+    |
+    */
+
+    'webhook_middleware' => env('EPVS_WEBHOOK_MIDDLEWARE', 'auth:sanctum'),
 ];

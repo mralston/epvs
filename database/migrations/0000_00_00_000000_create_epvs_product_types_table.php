@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('epvs_finance_lenders', function (Blueprint $table) {
-            $table->id();
+        Schema::create('epvs_product_types', function (Blueprint $table) {
+            $table->integer('id')->primary();
             $table->string('name');
-            $table->string('xero_contact_link')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('epvs_finance_lenders');
+        Schema::dropIfExists('epvs_product_types');
     }
 };

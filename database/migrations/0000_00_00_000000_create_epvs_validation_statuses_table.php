@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('epvs_product_types', function (Blueprint $table) {
-            $table->id();
+        Schema::create('epvs_validation_statuses', function (Blueprint $table) {
+            $table->integer('id')->primary();
             $table->string('name');
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('epvs_product_types');
+        Schema::dropIfExists('epvs_validation_statuses');
     }
 };

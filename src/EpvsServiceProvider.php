@@ -40,16 +40,7 @@ class EpvsServiceProvider extends ServiceProvider
                 __DIR__ . '/../config/config.php' => config_path('epvs.php'),
             ], 'epvs-config');
 
-            $this->publishes([
-                __DIR__ . '/../database/migrations/create_epvs_finance_brokers_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_epvs_finance_brokers_table.php'),
-                __DIR__ . '/../database/migrations/create_epvs_finance_lenders_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_epvs_finance_lenders_table.php'),
-                __DIR__ . '/../database/migrations/create_epvs_installers_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_epvs_installers_table.php'),
-                __DIR__ . '/../database/migrations/create_epvs_insurance_providers_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_epvs_insurance_providers_table.php'),
-                __DIR__ . '/../database/migrations/create_epvs_product_types_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_epvs_product_types_table.php'),
-                __DIR__ . '/../database/migrations/create_epvs_users_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_epvs_users_table.php'),
-                __DIR__ . '/../database/migrations/create_epvs_validation_statuses_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_epvs_validation_statuses_table.php'),
-                __DIR__ . '/../database/migrations/create_epvs_validations_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_epvs_validations_table.php'),
-            ], 'epvs-migrations');
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
             $this->commands([
                 GetWebhookUrls::class,

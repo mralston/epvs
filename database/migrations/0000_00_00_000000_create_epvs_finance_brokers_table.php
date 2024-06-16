@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('epvs_users', function (Blueprint $table) {
-            $table->id();
+        Schema::create('epvs_finance_brokers', function (Blueprint $table) {
+            $table->integer('id')->primary();
             $table->string('name');
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->timestamp('last_activity_formatted')->nullable();
-            $table->string('full_name')->nullable();
+            $table->string('xero_contact_link')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('epvs_users');
+        Schema::dropIfExists('epvs_finance_brokers');
     }
 };

@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('epvs_users', function (Blueprint $table) {
-            $table->id();
+        Schema::create('epvs_files', function (Blueprint $table) {
+            $table->integer('id')->primary();
             $table->integer('file_folder_id')->nullable();
             $table->string('original_filename')->nullable();
             $table->string('storage_filename')->nullable();

@@ -4,6 +4,7 @@ namespace Mralston\Epvs;
 
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Str;
+use Mralston\Epvs\Traits\Certificates;
 use Mralston\Epvs\Traits\Files;
 use Mralston\Epvs\Traits\FinanceBrokers;
 use Mralston\Epvs\Traits\FinanceLenders;
@@ -14,6 +15,7 @@ use Mralston\Epvs\Traits\Validations;
 
 class ApiClient
 {
+    use Certificates;
     use Files;
     use FinanceBrokers;
     use FinanceLenders;
@@ -25,7 +27,7 @@ class ApiClient
     private string $endpoint = 'https://validationhub.co.uk/api/v1';
     private ?string $token = null;
 
-    private $requestPayload;
+    private array $requestPayload = [];
     private ?Response $response;
 
     public function __construct(?string $token = null, ?string $endpoint = null)
@@ -37,12 +39,12 @@ class ApiClient
         }
     }
 
-    public function login(string $token)
+    public function login(string $token): void
     {
         $this->token = $token;
     }
 
-    public function getRequestPayload()
+    public function getRequestPayload(): array
     {
         return $this->requestPayload;
     }

@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('epvs_payment_methods', function (Blueprint $table) {
-            $table->id();
+        Schema::create('epvs_installers', function (Blueprint $table) {
+            $table->integer('id')->primary();
             $table->string('name');
+            $table->string('xero_contact_link')->nullable();
+            $table->string('readable_membership_status')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('epvs_payment_methods');
+        Schema::dropIfExists('epvs_installers');
     }
 };

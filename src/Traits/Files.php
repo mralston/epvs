@@ -11,7 +11,7 @@ use Mralston\Epvs\Models\Validation;
 
 trait Files
 {
-    public function upload(string $content, string $filename, ?Validation $validation = null, bool $persist = true)
+    public function upload(string $content, string $filename, ?Validation $validation = null, bool $persist = true): File
     {
         $this->requestPayload = [
             'upload_type' => 'validation'
@@ -41,7 +41,7 @@ trait Files
         )->fillAndHydrate($json, $persist);
     }
 
-    public function uploadFromFilesystem(string $path, ?Validation $validation = null, bool $persist = true)
+    public function uploadFromFilesystem(string $path, ?Validation $validation = null, bool $persist = true): File
     {
         return $this->upload(
             file_get_contents($path),
@@ -51,7 +51,7 @@ trait Files
         );
     }
 
-    public function uploadFromStorage(string $disk, $path, ?Validation $validation = null, bool $persist = true)
+    public function uploadFromStorage(string $disk, $path, ?Validation $validation = null, bool $persist = true): File
     {
         return $this->upload(
             Storage::disk($disk)->get($path),
