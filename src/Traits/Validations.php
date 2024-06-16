@@ -52,16 +52,21 @@ trait Validations
 
     public function createValidation(array $attributes, bool $persist = true): Validation
     {
-        $this->requestPayload = $attributes;
+        $this->requestPayload = array_merge($attributes, [
+            'file_empty_warning' => 1 // TODO: Support adding files
+        ]);
 
         $this->response = Http::withToken($this->token)
-            ->post($this->endpoint . '/validations', $this->requestPayload)
-            ->throw();
+            ->asMultipart()
+            ->acceptJson()
+            ->post($this->endpoint . '/validations', $this->requestPayload);
+
+        $this->response->throw();
 
         $json = $this->response->json();
 
         if (is_null($json)) {
-            throw new InvalidResponseException();
+            throw (new InvalidResponseException())->setResponse($this->response);
         }
 
         return app(Validation::class)

@@ -4,6 +4,7 @@ namespace Mralston\Epvs;
 
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Str;
+use Mralston\Epvs\Traits\Files;
 use Mralston\Epvs\Traits\FinanceBrokers;
 use Mralston\Epvs\Traits\FinanceLenders;
 use Mralston\Epvs\Traits\InsuranceProviders;
@@ -13,6 +14,7 @@ use Mralston\Epvs\Traits\Validations;
 
 class ApiClient
 {
+    use Files;
     use FinanceBrokers;
     use FinanceLenders;
     use InsuranceProviders;
@@ -24,7 +26,7 @@ class ApiClient
     private ?string $token = null;
 
     private $requestPayload;
-    private Response $response;
+    private ?Response $response;
 
     public function __construct(?string $token = null, ?string $endpoint = null)
     {
@@ -45,8 +47,8 @@ class ApiClient
         return $this->requestPayload;
     }
 
-    public function getLastResponse(): Response
+    public function getLastResponse(): ?Response
     {
-        return $this->response;
+        return $this->response ?? null;
     }
 }
