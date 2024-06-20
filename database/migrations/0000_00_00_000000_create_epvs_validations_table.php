@@ -57,6 +57,7 @@ return new class extends Migration
             $table->string('customer_full_name')->nullable();
             $table->string('installation_address_full')->nullable();
             $table->string('payment_method_readable')->nullable();
+            $table->morphs('validationable');
             $table->timestamps();
             $table->softDeletes();
         });

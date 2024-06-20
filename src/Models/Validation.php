@@ -116,4 +116,9 @@ class Validation extends Model
     {
         return $this->belongsTo(ValidationStatus::class);
     }
+
+    public function validationable()
+    {
+        return $this->morphTo();
+    }
 }
