@@ -2,6 +2,7 @@
 
 namespace Mralston\Epvs\Traits;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Mralston\Epvs\Exceptions\InvalidResponseException;
@@ -50,7 +51,7 @@ trait Validations
         )->fillAndHydrate($json['data'], $persist);
     }
 
-    public function createValidation(array $attributes, bool $persist = true): Validation
+    public function createValidation(array $attributes, bool $persist = true, ?Model $parent = null): Validation
     {
         $this->requestPayload = array_merge($attributes, [
             'file_empty_warning' => 1 // TODO: Support adding files
@@ -69,7 +70,20 @@ trait Validations
             throw (new InvalidResponseException())->setResponse($this->response);
         }
 
-        return app(Validation::class)
-            ->fillAndHydrate($json['data'], $persist);
+        $validation = app(Validation::class)
+            ->fillAndHydrate($json['data'], false);
+
+        // Normally this would be done with $validation->validationable()->associate($parent)->save()
+        // but for some reason it isn't persisting to the database, so we're doing it manually instead.
+        if (!empty($parent)) {
+            $validation->validationable_type = get_class($parent);
+            $validation->validationable_id = $parent->id;
+        }
+
+        if ($persist) {
+            $validation->save();
+        }
+
+        return $validation;;
     }
 }
