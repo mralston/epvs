@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'endpoint' => env('EPVS_ENDPOINT', 'https://validationhub.co.uk/api/v1'),
+    'endpoint' => env('EPVS_ENDPOINT', 'https://www.validationhub.co.uk/api/v1'),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'dashboard' => env('EPVS_DASHBOARD', 'https://validationhub.co.uk'),
+    'dashboard' => env('EPVS_DASHBOARD', 'https://www.validationhub.co.uk'),
 
     /*
     |--------------------------------------------------------------------------
