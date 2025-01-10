@@ -22,6 +22,7 @@ trait Files
         }
 
         $this->response = Http::withToken($this->token)
+            ->timeout(120)
             ->asMultipart()
             ->acceptJson()
             ->attach('file', $content, $filename)
